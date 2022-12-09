@@ -5,43 +5,39 @@ if(!isset($_SESSION['users'])){
 }
 else{
     include("../config.php");
-    $sqlf = "SELECT * FROM qari2;";
+    $admin = $con->query("Select type from admin WHERE user = '".$_SESSION['users']."';")->fetchcolumn();
+    $sqlf = "SELECT * FROM admin;";
     $radiof = $con->query($sqlf)->fetchall();
-    if(isset($_POST["submit"]) and isset($_POST["namei"]) and isset($_POST["linki"]))
+    if(isset($_POST["submit"]) and ($admin == 1) and isset($_POST["namei"]) and isset($_POST["typei"]) and isset($_POST["useri"]) and isset($_POST["emaili"]) and isset($_POST["passi"]))
     {
-        $sql = "INSERT into qari2(name,link) value(?,?);";
+        $sql = "insert into admin(`fullname`,`email`,`user`,`PASSWORD`,`type`) value(?,?,?,md5(?),?);";
         $rst = $con->prepare($sql);
-        $rst->execute([$_POST["namei"],$_POST["linki"]]);
+        $rst->execute([$_POST["namei"],$_POST["emaili"],$_POST["useri"],$_POST["passi"],$_POST["typei"]]);
     }
-    else if(isset($_POST["change"]) and isset($_POST["id"]) and isset($_POST["name"]) and isset($_POST["link"]))
+    else if(isset($_POST["change"])  and isset($_POST["id"]) and isset($_POST["type"]) and isset($_POST["pass"]) and ($admin == 1))
     {
-        $sqlk = "update qari2 set name = ? , link = ? WHERE id = ? ;";   
+        $sqlk = "update admin set  PASSWORD = md5(?) , type = ? WHERE id = ? ;";   
         $rstk = $con->prepare($sqlk);
-        $rstk->execute([$_POST["name"],$_POST["link"],$_POST["id"]]);
+        $rstk->execute([$_POST["pass"],$_POST["type"],$_POST["id"]]);
     }
 }
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         *{
             font-family: poppins;
-        }
-        ::-webkit-scrollbar {
-             width:10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #4b5563;
-            border-radius: 0 5px 5px 0;
         }
     </style>
     <title>Document</title>
@@ -56,19 +52,19 @@ else{
                 </svg>
             </a>
             <div class="flex flex-col items-center mt-3 border-t border-gray-700">
-                <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./index.php">
+                <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="#">
                     <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                    </svg>
-                </a>
-                <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./user.php">
-                    <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </a>
                 <a class="flex items-center justify-center w-12 h-12 mt-2 text-gray-200 bg-gray-700 rounded" href="#">
                     <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </a>
+                <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="#">
+                    <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </a>
                 <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="#">
@@ -119,15 +115,15 @@ else{
                         </svg>
                         <span class="ml-2 text-sm font-medium">Home</span>
                     </a>
-                    <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./user.php">
-                        <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                        <span class="ml-2 text-sm font-medium">user</span>
-                    </a>
                     <a class="flex items-center w-full h-12 px-3 mt-2 text-gray-200 bg-gray-700 rounded" href="#">
                         <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span class="ml-2 text-sm font-medium">user</span>
+                    </a>
+                    <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./radio.php">
+                        <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                         <span class="ml-2 text-sm font-medium">Radio</span>
                     </a>
@@ -169,8 +165,7 @@ else{
         </div>
 
         <div class="container w-full h-full bg-gray-900 rounded flex items-center justify-center">
-            
-            <div id="Win1" class="overflow-x-auto m-5 relative shadow-md sm:rounded-lg mb-10 h-4/5 flex place-items-center place-content-center">
+        <div id="Win1" class="overflow-x-auto m-5 relative shadow-md sm:rounded-lg mb-10 h-4/5 flex place-items-center place-content-center">
                 <table class="w-full text-sm text-left text-gray-400">
                     <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
                         <tr>
@@ -178,7 +173,10 @@ else{
                                 Id
                             </th>
                             <th scope="col" class="py-3 px-6">
-                                Qari2
+                                Full name
+                            </th>
+                            <th scope="col" class="py-3 px-6">
+                                type
                             </th>
                             <th scope="col" class="py-3 px-6">
                                 Action
@@ -186,47 +184,69 @@ else{
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><th class="p-3" colspan="3">
-                            <button href="#" id="change" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>
+                        <tr><th class="p-3" colspan="4">
+                            <button href="#" id="change" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Admin</button>
                         </th></tr>
-                        <tr><th class="p-3" colspan="3">
-                            <button href="#" id="edit" class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-blue-800">Edit</button>
+                        <tr><th class="p-3" colspan="4">
+                            <button href="#" id="edit" class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-blue-800">Edit admin</button>
                         </th></tr>
                         <?php
                             foreach($radiof as $ra){
-                            echo "<tr class=' border-b bg-gray-900 border-gray-700'><th scope='row' class='py-4 px-6 font-medium  whitespace-nowrap text-white'>".$ra[0]."</th><td class='py-4 px-6'>".$ra[1]."</td><td class='py-4 px-6'><a href='delete.php?id=".$ra[0]."' class='text-white bg-red-700 hover:bg-red-800/60 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'>Delete</button></td></tr>" ;
+                            echo "<tr class=' border-b bg-gray-900 border-gray-700'><th scope='row' class='py-4 px-6 font-medium  whitespace-nowrap text-white'>".$ra[0]."</th><td class='py-4 px-6'>".$ra[1]."</td><td class='py-4 px-6'>$ra[5]</td><td class='py-4 px-6'><a href='deleteUser.php?id=".$ra[0]."' class='text-white bg-red-700 hover:bg-red-800/60 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'>Delete</button></td></tr>" ;
                             };
                         ?>
 
                     </tbody>
                 </table>
             </div>
-
-        
-            <form id="Win2" class="editcontainer  w-full h-3/5 md:w-3/5 lg:w-2/5  pt-20 hidden" method="POST">
+            <form id="Win2" class="editcontainer  w-full h-3/5 md:w-3/5 lg:w-2/5   hidden" method="POST">
                 <div class="p-3">
-                    <input type="text" name="namei" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Qari2 Name" aria-label="text" aria-describedby="Qari2-Name" />
+                    <input type="text" name="namei" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="full name" aria-label="text" aria-describedby="admin-Name" />
                 </div>
                 <div class="p-3">
-                    <input type="text" name="linki" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Link" aria-label="text" aria-describedby="link" />
+                    <input type="email" name="emaili" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Email" aria-label="text" aria-describedby="email" />
+                </div>
+                <div class="p-3">
+                    <input type="username" name="useri" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Username" aria-label="text" aria-describedby="email" />
+                </div>
+                <div class="p-3">
+                    <input type="password" name="passi" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Password" aria-label="text" aria-describedby="email" />
+                </div>
+                <div class="p-3">
+                    <select name="typei" id="type" class="ext-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow ">
+                        <option selected disable>Choose a type</option>
+                        <option value="1">Full admin</option>
+                        <option value="0">Normal admin</option>
+                    </select>
                 </div>
                 <div class="text-center p-3">
-                    <button type="submit" name="submit"  class="inline-block w-full px-6 py-3 mt-0 mb-2 font-bold text-center text-white uppercase align-middle transition-all  rounded-lg cursor-pointer active:opacity-85 hover:-translate-y-px hover:shadow-md leading-normal text-xs ease-in tracking-tight-rem shadow-md  hover:border-slate-700  bg-gray-300/20 hover:bg-blue-500/30 hover:text-white">Add Live radio</button>
+                    <button type="submit" name="submit"  class="inline-block w-full px-6 py-3 mt-0 mb-2 font-bold text-center text-white uppercase align-middle transition-all  rounded-lg cursor-pointer active:opacity-85 hover:-translate-y-px hover:shadow-md leading-normal text-xs ease-in tracking-tight-rem shadow-md  hover:border-slate-700  bg-gray-300/20 hover:bg-blue-500/30 hover:text-white">Add Admin</button>
                   </div>
                   <div class="text-center p-3">
                     <button id="change1" type="button" name="add"  class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all  rounded-lg cursor-pointer active:opacity-85 hover:-translate-y-px hover:shadow-md leading-normal text-xs ease-in tracking-tight-rem shadow-md  hover:border-slate-700  bg-red-300/20 hover:bg-red-500 hover:text-white">close Add</button>
                   </div>
             </form>
 
-            <form id="Win3" class="editcontainer  w-full h-3/5 md:w-3/5 lg:w-2/5  pt-20 hidden" method="POST">
-                <div class="p-3">
-                    <input name="id" type="number" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="ID" aria-label="text" aria-describedby="ID" />
+            <form id="Win3" class="editcontainer  w-full h-3/5 md:w-3/5 lg:w-2/5   hidden" method="POST">
+            <div class="p-3">
+                    <select name="id" id="id" class="ext-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow ">
+                        <option selected disable>Choose admin</option>
+                        <?php
+                            foreach($radiof as $ra){
+                            echo "  <option value='$ra[0]' >$ra[1]</option>" ;
+                            };
+                        ?>
+                    </select>
                 </div>
                 <div class="p-3">
-                    <input name="name" type="text" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Qari2 Name" aria-label="text" aria-describedby="Qari2-Name" />
+                    <input type="password" name="pass" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Password" aria-label="text" aria-describedby="email" />
                 </div>
                 <div class="p-3">
-                    <input name="link" type="text" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Link" aria-label="text" aria-describedby="link" />
+                    <select name="type" id="type" class="ext-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow ">
+                        <option selected disable>Choose a type</option>
+                        <option value="1">Full admin</option>
+                        <option value="0">Normal admin</option>
+                    </select>
                 </div>
                 <div class="text-center p-3">
                     <button type="submit" name="change" class="inline-block w-full px-6 py-3 mt-0 mb-2 font-bold text-center text-white uppercase align-middle transition-all  rounded-lg cursor-pointer active:opacity-85 hover:-translate-y-px hover:shadow-md leading-normal text-xs ease-in tracking-tight-rem shadow-md  hover:border-slate-700  bg-gray-300/20 hover:bg-blue-500/30 hover:text-white">Edit</button>

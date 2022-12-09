@@ -42,7 +42,7 @@ else{
                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                     </svg>
                 </a>
-                <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./edit.php">
+                <a class="flex items-center justify-center w-12 h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./user.php">
                     <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
@@ -100,11 +100,11 @@ else{
                         </svg>
                         <span class="ml-2 text-sm font-medium">Home</span>
                     </a>
-                    <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./edit.php">
+                    <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./user.php">
                         <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
-                        <span class="ml-2 text-sm font-medium">Edit</span>
+                        <span class="ml-2 text-sm font-medium">user</span>
                     </a>
                     <a class="flex items-center w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300" href="./radio.php">
                         <svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -149,8 +149,9 @@ else{
             </a>
         </div>
 
-        <div class="overflow-x-auto m-10 relative shadow-md sm:rounded-lg mb-20">
-        <table class="w-full text-sm text-left text-gray-400">
+        <div class="container w-full h-full bg-gray-900 rounded flex items-center justify-center">
+
+        <table class="w-2/4 text-sm text-left text-gray-400 ">
         <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
             <tr>
                 <th scope="col" class="py-3 px-6">
@@ -166,8 +167,7 @@ else{
             foreach($DOWNLOAD as $do){
               echo "<tr class=' border-b bg-gray-900 border-gray-700'>";
               echo "<th scope='row' class='py-4 px-6 font-medium  whitespace-nowrap text-white'>$do[name]</th>";
-              echo "<td class='py-4 px-6'><a href='$do[link]' class='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Download</a>";
-              echo "</td><td class='py-4 px-6'>$do[type]</td><td class='py-4 px-6'>$do[size]</td><td class='py-4 px-6'>$do[ADDED]</td>";
+              echo "<td class='py-4 px-6'><a href='delete_download.php?id=$do[id]' class='font-medium text-red-600 dark:text-red-500 hover:underline'>Delete</a>";
             }
             ?>
         </tbody>

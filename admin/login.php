@@ -3,11 +3,14 @@
   if(isset($_POST['email']) and isset($_POST['password']))
   {
       $sql = "SELECT count(*) , user from admin where email = ? and PASSWORD = md5(?)";
+      $sqle = "SELECT user from admin where email = ? and PASSWORD = md5(?)";
       $rst = $con -> prepare($sql);
+      $rste = $con -> prepare($sqle);
       $rst->execute([$_POST['email'],$_POST['password']]);
+      $rste->execute([$_POST['email'],$_POST['password']]);
       $coun = $rst->fetchcolumn();
+      $user = $rste->fetchcolumn();
   }
-
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +59,7 @@
                   if($coun == 1)
                   {
                     session_start();
-                    $_SESSION['users'] = "ALLAH";
+                    $_SESSION['users'] = $user;
                     header("location:index.php");
                   }
                   else
