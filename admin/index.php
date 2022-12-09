@@ -3,6 +3,11 @@ session_start();
 if(!isset($_SESSION['users'])){
     header("location:./login.php");
 }
+else{
+    include("../config.php");
+    $sql = "Select * from download";
+    $DOWNLOAD = $con->query($sql)->fetchall();
+}
 ?>
 
 <!DOCTYPE html>
@@ -144,48 +149,27 @@ if(!isset($_SESSION['users'])){
             </a>
         </div>
 
-        <div class="container md:w-full w-4/5 h-full bg-gray-900 rounded flex items-center justify-center">
-            <div class="overflow-x-auto m-5 relative shadow-md sm:rounded-lg mb-10">
-                <table class="w-full text-sm text-left text-gray-400">
-                    <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
-                        <tr>
-                            <th scope="col" class="py-3 px-6">
-                                File name
-                            </th>
-                            <th scope="col" class="py-3 px-6">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class=" border-b bg-gray-900 border-gray-700">
-                            <th scope="row" class="py-4 px-6 font-medium  whitespace-nowrap text-white">
-                                Yasser Al-Mazroyee
-                            </th>
-                            <td class="py-4 px-6">
-                                <a href="http://torrent.mp3quran.net/download.php?id=075e6b54aca5a62de9500b83f564a3dab8e31b34&f=Yasser Al-Mazroyee.torrent" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
-                            </td>
-                        </tr>
-                        <tr class=" border-b bg-gray-900 border-gray-700">
-                          <th scope="row" class="py-4 px-6 font-medium  whitespace-nowrap text-white">
-                              Yasser Al-Mazroyee
-                          </th>
-                          <td class="py-4 px-6">
-                              <a href="http://torrent.mp3quran.net/download.php?id=075e6b54aca5a62de9500b83f564a3dab8e31b34&f=Yasser Al-Mazroyee.torrent" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
-                          </td>
-                      </tr>
-                      <tr class=" border-b bg-gray-900 border-gray-700">
-                        <th scope="row" class="py-4 px-6 font-medium  whitespace-nowrap text-white">
-                            Yasser Al-Mazroyee
-                        </th>
-                        <td class="py-4 px-6">
-                            <a href="http://torrent.mp3quran.net/download.php?id=075e6b54aca5a62de9500b83f564a3dab8e31b34&f=Yasser Al-Mazroyee.torrent" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Download</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    
+        <div class="overflow-x-auto m-10 relative shadow-md sm:rounded-lg mb-20">
+        <table class="w-full text-sm text-left text-gray-400">
+        <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                    File name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach($DOWNLOAD as $do){
+              echo "<tr class=' border-b bg-gray-900 border-gray-700'>";
+              echo "<th scope='row' class='py-4 px-6 font-medium  whitespace-nowrap text-white'>$do[name]</th>";
+              echo "<td class='py-4 px-6'><a href='$do[link]' class='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Download</a>";
+              echo "</td><td class='py-4 px-6'>$do[type]</td><td class='py-4 px-6'>$do[size]</td><td class='py-4 px-6'>$do[ADDED]</td>";
+            }
+            ?>
+        </tbody>
 </body>
 </html>

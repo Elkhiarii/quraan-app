@@ -5,11 +5,11 @@ if(!isset($_SESSION['users'])){
 }
 else{
     include("../config.php");
-    if(isset($_POST["id"]) and isset($_POST["name"]) and isset($_POST["link"]))
+    if(isset($_POST["name"]) and isset($_POST["link"]) and isset($_POST["type"]) and isset($_POST["size"]))
     {
-        $sqlk = "update qari2 set name = ? , link = ? WHERE id = ? ;";   
+        $sqlk = "insert into download(name,link,type,size) value(?,?,?,?) ;";   
         $rstk = $con->prepare($sqlk);
-        $rstk->execute([$_POST["name"],$_POST["link"],$_POST["id"]]);
+        $rstk->execute([$_POST["name"],$_POST["link"],$_POST["type"],$_POST["size"]]);
     }
 }
 
@@ -160,13 +160,16 @@ else{
         <div class="container w-full h-full bg-gray-900 rounded flex items-center justify-center">
             <form class="editcontainer  w-full h-3/5 md:w-3/5 lg:w-2/5  pt-20 " method="POST">
                 <div class="p-3">
-                    <input name="id" type="number" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="ID" aria-label="text" aria-describedby="ID" />
-                </div>
-                <div class="p-3">
-                    <input name="name" type="text" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Qari2 Name" aria-label="text" aria-describedby="Qari2-Name" />
+                    <input name="name" type="text" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Name" aria-label="text" aria-describedby="Qari2-Name" />
                 </div>
                 <div class="p-3">
                     <input name="link" type="text" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="Link" aria-label="text" aria-describedby="link" />
+                </div>
+                <div class="p-3">
+                    <input name="type" type="text" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="type" aria-label="text" aria-describedby="link" />
+                </div>
+                <div class="p-3">
+                    <input name="size" type="text" class="text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-medium text-white transition-all focus:border-[#5e72e4] focus:bg-gray-300/50  bg-gray-300/20 focus:text-gray-900 focus:outline-none focus:transition-shadow " placeholder="size" aria-label="text" aria-describedby="link" />
                 </div>
                 <div class="text-center p-3">
                     <button type="submit" class="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all  rounded-lg cursor-pointer active:opacity-85 hover:-translate-y-px hover:shadow-md leading-normal text-xs ease-in tracking-tight-rem shadow-md  hover:border-slate-700  bg-gray-300/20 hover:bg-blue-500/30 hover:text-white">Edite</button>

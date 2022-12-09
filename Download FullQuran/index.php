@@ -1,46 +1,29 @@
+<?php
+  require("../config.php");
+  $sql = "Select * from download";
+  $DDOWNLOAD = $con->query($sql)->fetchall();
+?>
+
 <!doctype html>
-<html>
+<html >
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="Islamic Book Al Quran Logo.svg" type="image/svg">
-  <title>RadioQuran</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="shortcut icon" href="../Islamic Book Al Quran Logo.svg" type="image/svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lateef:wght@500&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Download FullQuran</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vibes&display=swap');
 *{
     font-family: poppins;
 }
-.ad3ia{
-    font-family: 'Lateef', serif;
-}
-#videoBG {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter:blur(2px);
-}
-
-
-  </style>  
+</style>
 </head>
-<body class="bg-neutral-200">
+<body class="bg-neutral-200 dark">
 
-
-<video class="-z-50" id="videoBG" poster="poster.JPG" autoplay muted loop>
-    <source src="back.mp4" type="video/mp4">
-</video>
 
   <div class="Loading absolute w-full h-full bg-gray-700 z-50 flex place-content-center place-items-center">
     <div role="status">
@@ -84,19 +67,19 @@
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
           <div class="flex flex-shrink-0 items-center">
-            <img class="block h-8 w-auto lg:hidden" src="Islamic Book Al Quran Logo.svg" alt="Your Company">
-            <img class="hidden h-8 w-auto lg:block" src="Islamic Book Al Quran Logo.svg" alt="Your Company">
+            <img class="block h-8 w-auto lg:hidden" src="../islamic Book Al Quran Logo.svg" alt="Your Company">
+            <img class="hidden h-8 w-auto lg:block" src="../islamic Book Al Quran Logo.svg" alt="Your Company">
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Home</a>
-  
-              <a href="Live Radio/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Live Radio</a>
-  
-              <a href="Random Quran/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Random Quran</a>
-  
-              <a href="Download FullQuran/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Download FullQuran</a>
+              <a href="../" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+              
+              <a href="../Live Radio/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Live Radio</a>
+              
+              <a href="../Random Quran/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Random Quran</a>
+              
+              <a href="#" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Download FullQuran</a>
             </div>
           </div>
         </div>
@@ -116,29 +99,59 @@
     <div class="sm:hidden hidden" id="mobile-menu">
       <div class="space-y-1 px-2 pt-2 pb-3">
         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Home</a>
-  
-        <a href="Live Radio/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Live Radio</a>
-  
-        <a href="Random Quran/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Random Quran</a>
-  
-        <a href="Download FullQuran/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Download FullQuran</a>
+        <a href="../" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+        
+        <a href="../Live Radio/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Live Radio</a>
+        
+        <a href="../Random Quran/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Random Quran</a>
+        
+        <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Download FullQuran</a>
       </div>
     </div>
   </nav>
 
 
 
-    <div class="sm:text-3xl absolute bg-gray-800 place-content-center flex place-items-center text-center shadow-lg  w-4/6 text-xl h-2/6 -translate-x-2/4 -translate-y-2/4 top-2/4 left-2/4 -z-40 text-white rounded-lg shadow-2xl ">
-    <p class="ad3ia">( فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُواْ لِي وَلاَ تَكْفُرُونِ )</p>
-    </div>
+  <div class="overflow-x-auto m-10 relative shadow-md sm:rounded-lg mb-20">
+    <table class="w-full text-sm text-left text-gray-400">
+        <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                    File name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Action
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  Type File
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  size
+                </th>
+                <th scope="col" class="py-3 px-6">
+                  Added
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach($DDOWNLOAD as $do){
+              echo "<tr class=' border-b bg-gray-900 border-gray-700'>";
+              echo "<th scope='row' class='py-4 px-6 font-medium  whitespace-nowrap text-white'>$do[name]</th>";
+              echo "<td class='py-4 px-6'><a href='$do[link]' class='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Download</a>";
+              echo "</td><td class='py-4 px-6'>$do[type]</td><td class='py-4 px-6'>$do[size]</td><td class='py-4 px-6'>$do[ADDED]</td>";
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
 
 
 
-  <footer class="text-center bg-gray-900 shadow-lg text-white mb-0 fixed bottom-0 w-full">
+  <footer class="text-center bg-gray-900 text-white mb-0 bottom-0 fixed w-full">
     <div class="text-center p-4 bg-gray-900" >
       © 2021 Copyright:
-      <a class="text-whitehite" href="admin/">RadioQuran</a>
+      <a class="text-whitehite" href="https://elkhiarii.me/">RadioQuran</a>
     </div>
   </footer>
 </body>
@@ -153,6 +166,5 @@ window.addEventListener("load",()=>{
 document.querySelector(".Loading").classList.add("hidden")
 
 })
-document.getElementById('vid').play();
 </script>
 </html>
